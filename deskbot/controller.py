@@ -1,7 +1,7 @@
 import win32gui
 import pyautogui as py
 import time
-from deskbot import constant
+from deskbot import constant as cs
 
 
 class Controller:
@@ -23,7 +23,7 @@ class Controller:
         py.moveTo(x + self.coords[0], y + self.coords[1])
         py.click()
 
-    def screen_shot(self, name):
+    def screen_shot(self, name=cs.CURRENT_FRAME):
         self.center()
         py.screenshot(name, region=self.coords)
 
@@ -32,10 +32,10 @@ class Controller:
         if self.hwnd == 0:
             raise Exception("Duel Links is not running!")
         rect = win32gui.GetWindowRect(self.hwnd)
-        x = rect[0] + constant.LEFT_MARGIN
-        y = rect[1] + constant.TOP_MARGIN
-        w = rect[2] - x - constant.RIGHT_MARGIN
-        h = rect[3] - y - constant.BOTTOM_MARGIN
+        x = rect[0] + cs.LEFT_MARGIN
+        y = rect[1] + cs.TOP_MARGIN
+        w = rect[2] - x - cs.RIGHT_MARGIN
+        h = rect[3] - y - cs.BOTTOM_MARGIN
         print("Window %s:" % win32gui.GetWindowText(self.hwnd))
         print("\tLocation: (%d, %d)" % (x, y))
         print("\tSize: (%d, %d)" % (w, h))

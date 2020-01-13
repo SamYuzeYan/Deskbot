@@ -130,5 +130,5 @@ dmypy.json
 
 bin/
 .idea/
-Deskbot/image_cache/*.png
+deskbot/image_cache/*.png
 TODO.md
