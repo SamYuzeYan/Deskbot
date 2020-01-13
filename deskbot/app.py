@@ -4,21 +4,26 @@ import time
 
 def test_match(controller):
     controller.screen_shot()
-    match = ps.match_all(threshold=0.15)
-    print(match)
+    top_left, bottom_right = ps.match_all(threshold=0.15)
+    print(f'Top Left: {top_left}, Bottom Right: {bottom_right}')
+    if top_left != -1:
+        print('Clicking on valid locations')
+        controller.click_within(top_left, bottom_right)
 
 
-def test_diff(controller):
+def test_diff(controller, processor):
     controller.screen_shot()
     time.sleep(0.5)
-    ps.difference(cs.CURRENT_FRAME, "image_cache/test2.png")
+    processor.check_difference()
 
 
 def run():
     controller = ctr.Controller(cs.DUEL_LINKS)
     processor = ps.Processor(controller)
-    # test_diff(controller)
-    test_match(controller)
+    test_diff(controller, processor)
+    # test_match(controller)
+
+
 
 
 

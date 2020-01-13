@@ -32,3 +32,4 @@ TEMPLATES = [
 ]
 
 CURRENT_FRAME = "image_cache/current_frame.png"
+NEW_FRAME = "image_cache/new_frame.png"

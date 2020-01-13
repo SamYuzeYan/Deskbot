@@ -83,13 +83,12 @@ def difference(im1, im2, greyscale=False):
         img1 = img1.convert('LA')
         img2 = img2.convert('LA')
     diff = ImageChops.difference(img1, img2)
-    hist = diff.histogram()
     stat = ImageStat.Stat(diff)
     sum_vals = sum(stat.mean)
     max_vals = 255 * len(stat.mean)
     diff_ratio = sum_vals / max_vals
-    print(str(diff_ratio * 100))
-    return stat.rms
+    print(str(diff_ratio * 100) + "% difference")
+    return diff_ratio * 100
 
 
 # def check_start():
@@ -120,4 +119,20 @@ class Processor:
         text = detect_text(bw)
         print(text)
         return text
+
+    def check_difference(self, old_name=cs.CURRENT_FRAME, new_name=cs.NEW_FRAME, greyscale=False):
+        old = Image.open(old_name)
+        self.ctr.screen_shot(new_name)
+        new = Image.open(new_name)
+        if greyscale:
+            old = old.convert('LA')
+            new = new.convert('LA')
+        diff = ImageChops.difference(old, new)
+        stat = ImageStat.Stat(diff)
+        sum_values = sum(stat.mean)
+        max_values = 255 * len(stat.mean)
+        diff_ratio = sum_values / max_values
+        print(str(diff_ratio * 100) + "% difference")
+        new.save(old_name)
+        return diff_ratio * 100
 

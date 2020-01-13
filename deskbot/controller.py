@@ -1,6 +1,7 @@
 import win32gui
 import pyautogui as py
 import time
+import math
 from deskbot import constant as cs
 
 
@@ -17,10 +18,16 @@ class Controller:
         self.__find_coords()
         self.__bring()
 
+    def click_within(self, top_left, bottom_right):
+        total = tuple(map(sum, zip(top_left, bottom_right)))
+        middle = tuple(math.floor(ti/2) for ti in total)
+        print(middle)
+        self.click(middle)
+
     # click at x, y position relative to the window
-    def click(self, x, y):
+    def click(self, pos):
         self.center()
-        py.moveTo(x + self.coords[0], y + self.coords[1])
+        py.moveTo(pos[0] + self.coords[0], pos[1] + self.coords[1])
         py.click()
 
     def screen_shot(self, name=cs.CURRENT_FRAME):
